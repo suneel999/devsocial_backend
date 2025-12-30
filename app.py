@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # NODEJS: app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True, origins=["http://localhost:5173", "http://13.60.170.40"])
 
 # NODEJS: Initialize plugins
 db.init_app(app)
