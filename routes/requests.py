@@ -3,7 +3,6 @@ from extensions import db
 from models import User, ConnectionRequest
 from middleware import token_required
 
-# NODEJS: const requestRouter = express.Router();
 request_bp = Blueprint('request', __name__)
 
 @request_bp.route('/send/<status>/<to_user_id>', methods=['POST'])
@@ -23,7 +22,6 @@ def send_connection_request(current_user, status, to_user_id):
             return jsonify({'message': "User not found!"}), 404
             
         # Check existing connection
-        # NODEJS: $or:[{toUserId,fromUserId}, {toUserId : fromUserId, fromUserId:toUserId}]
         existing_request = ConnectionRequest.query.filter(
             ((ConnectionRequest.from_user_id == from_user_id) & (ConnectionRequest.to_user_id == to_user_id)) |
             ((ConnectionRequest.from_user_id == to_user_id) & (ConnectionRequest.to_user_id == from_user_id))
@@ -66,7 +64,6 @@ def review_connection_request(current_user, status, request_id):
         else:
              print(f"DEBUG: Request {request_id} NOT FOUND in DB.")
              
-        # NODEJS: toUserId : toUserId, status : "interested"
         connection_request = ConnectionRequest.query.filter_by(
             id=request_id,
             to_user_id=logged_in_user_id,

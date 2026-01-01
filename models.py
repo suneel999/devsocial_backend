@@ -4,7 +4,6 @@ import datetime
 from config import Config
 
 class User(db.Model):
-    # NODEJS: In Mongoose: const userSchema = new mongoose.Schema({...})
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +16,6 @@ class User(db.Model):
     about = db.Column(db.String(200), default="I like coding")
     photo_url = db.Column(db.String(500), default="https://geographyandyou.com/images/user-profile.png")
     
-    # NODEJS: Mongoose 'methods' (userSchema.methods.getJWT)
     def get_jwt_token(self):
         # Generates a JWT token
         payload = {
@@ -26,8 +24,6 @@ class User(db.Model):
         }
         return jwt.encode(payload, Config.SECRET_KEY, algorithm='HS256')
 
-    # NODEJS: Mongoose 'methods' (userSchema.methods.validatePassword)
-    # We will use bcrypt here directly usually, but can add helper method
     def to_dict(self):
         # Helper to serialize (like .toJSON())
         return {
@@ -57,7 +53,7 @@ class ConnectionRequest(db.Model):
     def to_dict(self):
          return {
             'id': self.id,
-            'fromUserId': self.from_user_id, # matching Node response structure often returns keys or populated objects
+            'fromUserId': self.from_user_id,
             'toUserId': self.to_user_id,
             'status': self.status
          }

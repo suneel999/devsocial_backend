@@ -3,14 +3,13 @@ from extensions import db
 from models import User, ConnectionRequest
 from middleware import token_required
 
-# NODEJS: const userRouter = express.Router();
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/user/connections/received', methods=['GET'])
 @token_required
+@token_required
 def get_received_requests(current_user):
     try:
-        # NODEJS: toUserId : loggedinuser._id, status : "interested"
         requests = ConnectionRequest.query.filter_by(
             to_user_id=current_user.id,
             status="interested"
@@ -34,9 +33,9 @@ def get_received_requests(current_user):
 
 @user_bp.route('/user/connections', methods=['GET'])
 @token_required
+@token_required
 def get_connections(current_user):
     try:
-        # NODEJS: $or:[ {fromUserId:..., status : "accepted"}, {toUserId:..., status : "accepted"} ]
         connections = ConnectionRequest.query.filter(
             (ConnectionRequest.status == 'accepted') &
             ((ConnectionRequest.from_user_id == current_user.id) | (ConnectionRequest.to_user_id == current_user.id))
